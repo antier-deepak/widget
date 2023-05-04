@@ -18,6 +18,8 @@ window.ReactCounter = {
   },
 };
 
+console.log("Just to update the build of app.");
+
 // Find all widget divs
 // const widgetDiv = ReactDOM.createRoot(document.getElementById(".dummy-widget"));
 // console.log("widget running!");
