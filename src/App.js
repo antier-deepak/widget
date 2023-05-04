@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { Box, Modal, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -14,7 +13,7 @@ function App(props) {
 
   useEffect(() => {
     counterData(count);
-  }, [count]);
+  }, [count, counterData]);
 
   const style = {
     position: "absolute",
