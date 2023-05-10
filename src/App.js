@@ -1,5 +1,5 @@
 import "./App.css";
-import { Box, Container, Grid, Modal, Typography } from "@mui/material";
+import { Box, Grid, Modal, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Button } from "@mui/base";
 import CampaignCard from "./components/CampaignCard/CampaignCard";
