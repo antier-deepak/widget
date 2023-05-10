@@ -9,12 +9,14 @@ function App(props) {
   const [show, setShow] = useState(true);
   const [campaigns, setCampaigns] = useState("");
   const [donationSuccess, setDonationSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleClose = () => {
     setShow(false);
   };
 
   const getCollections = () => {
+    setIsLoading(true);
     fetch("https://qa-api.stumpup.org/user/api/v1/users/campaign/list/2/1", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       headers: {
@@ -27,7 +29,7 @@ function App(props) {
         return res?.json();
       })
       .then((data) => {
-        console.log("data", data);
+        setIsLoading(false);
         setCampaigns(data?.data?.rows);
       });
   };
@@ -49,6 +51,8 @@ function App(props) {
   };
 
   const buttonClickHandler = (campaign) => {
+    setIsLoading(true);
+
     let data = {
       campaign_id: campaign?.id,
       amount: 1,
@@ -70,30 +74,11 @@ function App(props) {
         return res?.json();
       })
       .then((data) => {
-        console.log("data", data);
         if (data?.error) {
+          setIsLoading(false);
           setDonationSuccess(true);
         }
       });
-
-    // await apiCallPost(
-    //   "",
-    //   {
-    //     campaign_id: campData?.id,
-    //     amount: amount,
-    //     coin: "matic",
-    //   },
-    //   {},
-    //   true
-    // )
-    //   .then((results) => {
-    //     if (!results.error) {
-    //       handleDonationSuccessModal();
-    //       // handleClose();
-    //       CrowdfundingData();
-    //     }
-    //   })
-    //   .catch((error) => {});
   };
   return (
     <Modal
@@ -103,7 +88,11 @@ function App(props) {
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        {donationSuccess ? (
+        {isLoading ? (
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Loading...
+          </Typography>
+        ) : donationSuccess ? (
           <div style={{ textAlign: "center" }}>
             <Typography variant="h6" component="h2">
               Donation Successfull!
